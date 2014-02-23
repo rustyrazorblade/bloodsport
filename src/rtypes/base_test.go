@@ -17,13 +17,14 @@ type BaseSuite struct {
 
 
 func (s *BaseSuite) TestCreate(c *C) {
-	st := StringType{BaseType{timestamp:1}}
-	it := IntType{BaseType{timestamp:1}}
-	c.Check(st, Not(Equals), it)
-	c.Check(st.timestamp, Equals, 1)
-	c.Check(it.timestamp, Equals, 1)
 
-	str2 := NewString(1)
-	c.Check(str2.timestamp, Equals, 1)
+	str := NewString("string", 1)
+	c.Check(str.timestamp, Equals, 1)
+
+	i := NewInteger(1, 1)
+	c.Check(i.value, Equals, 1)
+
+	f := NewFloat(1.0, 1)
+	c.Check(f.value, Equals, 1.0)
 }
 

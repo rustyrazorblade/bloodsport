@@ -14,16 +14,18 @@ type BaseType struct {
 
 type StringType struct {
 	BaseType
+	value string
 }
 
 type IntType struct {
 	BaseType
+	value int64
 
 }
 
 type FloatType struct {
 	BaseType
-
+	value float64
 }
 
 type Tombstone struct {
@@ -31,7 +33,18 @@ type Tombstone struct {
 
 }
 
-func NewString(timestamp int64) *StringType {
-	str := StringType{BaseType{timestamp:timestamp}}
+func NewString(value string, timestamp int64) *StringType {
+	str := StringType{BaseType{timestamp:timestamp}, value}
 	return &str
+}
+
+func NewFloat(value float64, timestamp int64) *FloatType {
+	fl := FloatType{BaseType{timestamp:timestamp}, value}
+	return &fl
+
+}
+
+func NewInteger(value int64, timestamp int64) *IntType {
+	i := IntType{BaseType{timestamp:timestamp}, value}
+	return &i
 }
