@@ -31,3 +31,7 @@ type Tombstone struct {
 
 }
 
+func NewString(timestamp int64) *StringType {
+	str := StringType{BaseType{timestamp:timestamp}}
+	return &str
+}

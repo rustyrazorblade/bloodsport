@@ -1,7 +1,7 @@
 package rtypes
 
 type Hash struct {
-
+	key string
 }
 
 func (hash *Hash) HDel(field ...string) {
@@ -36,26 +36,32 @@ func (hash *Hash) HLen() {
 
 }
 
-func HMGet(field ...string) {
+func (hash *Hash) HMGet(field ...string) {
 
 }
 
-func HMSet() {
+func (hash *Hash) HMSet() {
 
 }
 
-func HSet(field string, value string) {
+func (hash *Hash) HSet(field string, value string) {
 
 }
 
-func HSetNX(field string, value string) {
+func (hash *Hash) HSetNX(field string, value string) {
 
 }
 
-func HVals() {
+func (hash *Hash) HVals() {
 
 }
 
-func HScan() {
+func (hash *Hash) HScan() {
 
 }
+
+func NewHash(key string) *Hash {
+	h := Hash{key}
+	return &h
+}
+
