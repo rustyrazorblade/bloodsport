@@ -11,6 +11,11 @@ type HashSuite struct {
 
 }
 
-func (s *HashSuite) TestHashCreate(c *C) {
+func (s *HashSuite) TestHashSetAndGet(c *C) {
+	h := NewHash("somekey")
+	h.HSet("k", NewInteger(1, 1))
+	h.HGet("k")
+}
 
+func (s *HashSuite) TestIncrBy(c *C) {
 }
