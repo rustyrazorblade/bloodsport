@@ -3,6 +3,7 @@ package rtypes
 import (
 	"bytes"
 	"encoding/binary"
+	"errors"
 )
 
 type RedisType interface {
@@ -25,8 +26,46 @@ type BaseType struct {
 
 }
 
-func (bt *BaseType) GetValue() []byte {
-	return bt.value
+func (b *BaseType) ToInt() int64 {
+	var result int64
+	buf := bytes.NewReader(b.value)
+	binary.Read(buf, binary.LittleEndian, &result)
+	return result
+}
+func (b *BaseType) ToFloat() float64 {
+	var result float64
+	buf := bytes.NewReader(b.value)
+	binary.Read(buf, binary.LittleEndian, &result)
+	return result
+}
+
+func (b *BaseType) IncrBy(increment, timestamp int64) (int64, error) {
+	if b.vtype == float {
+		return 0, errors.New("TypeError")
+	}
+	val := b.ToInt() + increment
+
+	buf := new(bytes.Buffer)
+	binary.Write(buf, binary.LittleEndian, val)
+	b.value = buf.Bytes()
+
+	return val, nil
+
+}
+
+func (b *BaseType) DecrBy(decrement, timestamp int64) (int64, error) {
+	if b.vtype == float {
+		return 0, errors.New("TypeError")
+	}
+	val := b.ToInt() - decrement
+
+	buf := new(bytes.Buffer)
+	binary.Write(buf, binary.LittleEndian, val)
+	b.value = buf.Bytes()
+
+	return val, nil
+	return 0, nil
+
 }
 
 type StringType struct {
