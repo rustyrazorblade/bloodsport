@@ -14,7 +14,8 @@ func (hash *Hash) HExists(field string) {
 }
 
 func (hash *Hash) HGet(field string) VarType {
-	return hash.values[field]
+	tmp := hash.values[field]
+	return tmp
 }
 
 func (hash *Hash) HGetAll() {
@@ -34,14 +35,6 @@ func (hash *Hash) HKeys() {
 }
 
 func (hash *Hash) HLen() {
-
-}
-
-func (hash *Hash) HMGet(field ...string) {
-
-}
-
-func (hash *Hash) HMSet() {
 
 }
 
