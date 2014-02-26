@@ -22,4 +22,20 @@ func (s *HashSuite) TestHashSetAndGet(c *C) {
 }
 
 func (s *HashSuite) TestIncrBy(c *C) {
+	h := NewHash("somekey")
+	h.HSet("k", NewInteger(1, 1))
+	h.HIncrBy("k", 1)
+
+	result := h.HGet("k")
+	num, _ := result.ToInt()
+	c.Check(num, Equals, int64(2))
 }
+
+func (s *HashSuite) TestIncrByNoVarSet(c *C) {
+	h := NewHash("somekey")
+	h.HIncrBy("j", 1)
+	result := h.HGet("j")
+	num, _ := result.ToInt()
+	c.Check(num, Equals, int64(1))
+}
+
