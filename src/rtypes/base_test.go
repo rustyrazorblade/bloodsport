@@ -69,6 +69,8 @@ func (s *IncrDecrSuite) TestIncr(c *C) {
 	i, e = s.s2.IncrBy(1, 1)
 	c.Check(e, Equals, nil)
 	c.Check(i, Equals, int64(11))
+	// field should be a string now
+	c.Check(s.s2.vtype, Equals, int32(INT))
 }
 
 func (s *IncrDecrSuite) TestDecr(c *C) {

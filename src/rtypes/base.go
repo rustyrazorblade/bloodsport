@@ -16,9 +16,9 @@ type VarType interface {
 }
 
 const (
-	int = iota
-	float = iota
-	str = iota
+	INT = iota
+	FLOAT = iota
+	STR = iota
 )
 // base k/v structure
 type BaseType struct {
@@ -30,7 +30,7 @@ type BaseType struct {
 
 func (b *BaseType) ToInt() (int64, error) {
 
-	if b.vtype == str {
+	if b.vtype == STR {
 		result, err := strconv.Atoi(string(b.value))
 		if err == nil {
 			return int64(result), nil
@@ -52,7 +52,7 @@ func (b *BaseType) ToFloat() float64 {
 }
 
 func (b *BaseType) IncrBy(increment, timestamp int64) (int64, error) {
-	if b.vtype == float {
+	if b.vtype == FLOAT {
 		return 0, errors.New("TypeError")
 	}
 	tmp, err := b.ToInt()
@@ -65,12 +65,16 @@ func (b *BaseType) IncrBy(increment, timestamp int64) (int64, error) {
 	binary.Write(buf, binary.LittleEndian, val)
 	b.value = buf.Bytes()
 
+	if b.vtype != INT {
+		b.vtype = INT
+	}
+
 	return val, nil
 
 }
 
 func (b *BaseType) DecrBy(decrement, timestamp int64) (int64, error) {
-	if b.vtype == float {
+	if b.vtype == FLOAT {
 		return 0, errors.New("TypeError")
 	}
 	tmp, err := b.ToInt()
@@ -107,7 +111,7 @@ type Tombstone struct {
 
 func NewString(value string, timestamp int64) *StringType {
 	bval := []byte(value)
-	str := StringType{BaseType{timestamp:timestamp, value:bval, vtype:str}}
+	str := StringType{BaseType{timestamp:timestamp, value:bval, vtype:STR}}
 	return &str
 }
 
@@ -115,7 +119,7 @@ func NewFloat(value float64, timestamp int64) *FloatType {
 	buf := new(bytes.Buffer)
 	binary.Write(buf, binary.LittleEndian, value)
 
-	fl := FloatType{BaseType{timestamp:timestamp, value:buf.Bytes(), vtype:float}}
+	fl := FloatType{BaseType{timestamp:timestamp, value:buf.Bytes(), vtype:FLOAT}}
 	return &fl
 
 }
@@ -123,6 +127,6 @@ func NewFloat(value float64, timestamp int64) *FloatType {
 func NewInteger(value int64, timestamp int64) *IntType {
 	buf := new(bytes.Buffer)
 	binary.Write(buf, binary.LittleEndian, value)
-	i := IntType{BaseType{timestamp:timestamp, value:buf.Bytes(), vtype:int}}
+	i := IntType{BaseType{timestamp:timestamp, value:buf.Bytes(), vtype:INT}}
 	return &i
 }
