@@ -23,7 +23,7 @@ func (s *BaseSuite) TestToInt(c *C) {
 func (s *BaseSuite) TestCreate(c *C) {
 
 	str := NewString("string", 1)
-	c.Check(str.timestamp, Equals, int64(1))
+	c.Check(str.vtype, Equals, STR)
 
 	i := NewInteger(1, 1)
 	result, _ := i.ToInt()
@@ -52,25 +52,25 @@ func (s *IncrDecrSuite) SetUpTest(c *C) {
 }
 
 func (s *IncrDecrSuite) TestIncr(c *C) {
-	i, e := s.i.IncrBy(1, 2)
+	i, e := s.i.IncrBy(1)
 
 	c.Check(e, Equals, nil)
 	c.Check(i, Equals, int64(11))
 
 	// check float, should error
-	i, e = s.f.IncrBy(1, 1)
+	i, e = s.f.IncrBy(1)
 	c.Check(e, Not(Equals), nil)
 
 	// check string (that cannot be coerced to an int), should fail
-	i, e = s.s.IncrBy(1, 1)
+	i, e = s.s.IncrBy(1)
 	c.Check(e, Not(Equals), nil)
 
 	// check string (that can be coerced to an int), should be ok
-	i, e = s.s2.IncrBy(1, 1)
+	i, e = s.s2.IncrBy(1)
 	c.Check(e, Equals, nil)
 	c.Check(i, Equals, int64(11))
 	// field should be a string now
-	c.Check(s.s2.vtype, Equals, int32(INT))
+	c.Check(s.s2.vtype, Equals, INT)
 }
 
 func (s *IncrDecrSuite) TestDecr(c *C) {

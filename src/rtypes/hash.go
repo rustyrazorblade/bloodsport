@@ -23,6 +23,10 @@ func (hash *Hash) HGetAll() {
 }
 
 func (hash *Hash) HIncrBy(field string, increment int64) {
+	if _, ok := hash.values[field];  !ok {
+		hash.values[field] = NewInteger(0, 0)
+	}
+	hash.values[field].IncrBy(increment)
 
 }
 

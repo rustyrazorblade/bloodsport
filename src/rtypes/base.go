@@ -13,6 +13,7 @@ type RedisType interface {
 
 type VarType interface {
 	ToInt() (int64, error)
+	IncrBy(int64) (int64, error)
 }
 
 const (
@@ -22,9 +23,8 @@ const (
 )
 // base k/v structure
 type BaseType struct {
-	timestamp int64
 	value []byte
-	vtype int32
+	vtype int
 
 }
 
@@ -51,7 +51,7 @@ func (b *BaseType) ToFloat() float64 {
 	return result
 }
 
-func (b *BaseType) IncrBy(increment, timestamp int64) (int64, error) {
+func (b *BaseType) IncrBy(increment int64) (int64, error) {
 	if b.vtype == FLOAT {
 		return 0, errors.New("TypeError")
 	}
@@ -68,6 +68,7 @@ func (b *BaseType) IncrBy(increment, timestamp int64) (int64, error) {
 	if b.vtype != INT {
 		b.vtype = INT
 	}
+
 
 	return val, nil
 
@@ -111,7 +112,7 @@ type Tombstone struct {
 
 func NewString(value string, timestamp int64) *StringType {
 	bval := []byte(value)
-	str := StringType{BaseType{timestamp:timestamp, value:bval, vtype:STR}}
+	str := StringType{BaseType{value:bval, vtype:STR}}
 	return &str
 }
 
@@ -119,7 +120,7 @@ func NewFloat(value float64, timestamp int64) *FloatType {
 	buf := new(bytes.Buffer)
 	binary.Write(buf, binary.LittleEndian, value)
 
-	fl := FloatType{BaseType{timestamp:timestamp, value:buf.Bytes(), vtype:FLOAT}}
+	fl := FloatType{BaseType{value:buf.Bytes(), vtype:FLOAT}}
 	return &fl
 
 }
@@ -127,6 +128,6 @@ func NewFloat(value float64, timestamp int64) *FloatType {
 func NewInteger(value int64, timestamp int64) *IntType {
 	buf := new(bytes.Buffer)
 	binary.Write(buf, binary.LittleEndian, value)
-	i := IntType{BaseType{timestamp:timestamp, value:buf.Bytes(), vtype:INT}}
+	i := IntType{BaseType{value:buf.Bytes(), vtype:INT}}
 	return &i
 }
