@@ -12,6 +12,7 @@ type RedisType interface {
 }
 
 type VarType interface {
+	ToInt() (int64, error)
 }
 
 const (

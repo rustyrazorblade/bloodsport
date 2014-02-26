@@ -1,7 +1,6 @@
 package rtypes
 
 import (
-	"fmt"
 	"testing"
 	. "launchpad.net/gocheck"
 )
@@ -18,7 +17,8 @@ func (s *HashSuite) TestHashSetAndGet(c *C) {
 	h := NewHash("somekey")
 	h.HSet("k", NewInteger(1, 1))
 	result := h.HGet("k")
-	fmt.Println(result)
+	num, _ := result.ToInt()
+	c.Check(num, Equals, int64(1))
 }
 
 func (s *HashSuite) TestIncrBy(c *C) {
