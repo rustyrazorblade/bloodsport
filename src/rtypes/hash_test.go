@@ -12,6 +12,8 @@ type HashSuite struct {
 
 }
 
+var _ = Suite(&HashSuite{})
+
 func (s *HashSuite) TestHashSetAndGet(c *C) {
 	h := NewHash("somekey")
 	h.HSet("k", NewInteger(1, 1))

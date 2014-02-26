@@ -5,8 +5,6 @@ import (
 	. "launchpad.net/gocheck"
 )
 
-
-
 func Test(t *testing.T) { TestingT(t) }
 
 

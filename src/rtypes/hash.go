@@ -56,6 +56,7 @@ func (hash *Hash) HScan() {
 
 func NewHash(key string) *Hash {
 	h := Hash{key:key}
+	h.values = make(map[string]VarType)
 
 	return &h
 }
