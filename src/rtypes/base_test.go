@@ -78,6 +78,14 @@ func (s *IncrDecrSuite) TestDecr(c *C) {
 	c.Check(e, Equals, nil)
 	c.Check(i, Equals, int64(9))
 
+	// check string (that cannot be coerced to an int), should fail
+	i, e = s.s.DecrBy(1, 1)
+	c.Check(e, Not(Equals), nil)
+
+	// check string (that can be coerced to an int), should be ok
+	i, e = s.s2.DecrBy(1, 1)
+	c.Check(e, Equals, nil)
+	c.Check(i, Equals, int64(9))
 }
 
 
