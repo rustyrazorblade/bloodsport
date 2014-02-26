@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
+	"strconv"
 )
 
 type RedisType interface {
@@ -26,11 +27,21 @@ type BaseType struct {
 
 }
 
-func (b *BaseType) ToInt() int64 {
+func (b *BaseType) ToInt() (int64, error) {
+
+	if b.vtype == str {
+		result, err := strconv.Atoi(string(b.value))
+		if err == nil {
+			return int64(result), nil
+		} else {
+			return 0, err
+		}
+	}
+
 	var result int64
 	buf := bytes.NewReader(b.value)
 	binary.Read(buf, binary.LittleEndian, &result)
-	return result
+	return result, nil
 }
 func (b *BaseType) ToFloat() float64 {
 	var result float64
@@ -43,7 +54,11 @@ func (b *BaseType) IncrBy(increment, timestamp int64) (int64, error) {
 	if b.vtype == float {
 		return 0, errors.New("TypeError")
 	}
-	val := b.ToInt() + increment
+	tmp, err := b.ToInt()
+	if err != nil {
+		return 0, err
+	}
+	val := tmp + increment
 
 	buf := new(bytes.Buffer)
 	binary.Write(buf, binary.LittleEndian, val)
@@ -57,7 +72,11 @@ func (b *BaseType) DecrBy(decrement, timestamp int64) (int64, error) {
 	if b.vtype == float {
 		return 0, errors.New("TypeError")
 	}
-	val := b.ToInt() - decrement
+	tmp, err := b.ToInt()
+	if err != nil {
+		return 0, err
+	}
+	val := tmp - decrement
 
 	buf := new(bytes.Buffer)
 	binary.Write(buf, binary.LittleEndian, val)
