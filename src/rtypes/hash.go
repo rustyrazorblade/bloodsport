@@ -4,7 +4,6 @@ import (
 )
 
 type Hash struct {
-	key string
 	values map[string]VarType
 	size int
 }
@@ -44,8 +43,8 @@ func (hash *Hash) HKeys() {
 
 }
 
-func (hash *Hash) HLen() {
-
+func (hash *Hash) HLen() int {
+	return hash.size
 }
 
 func (hash *Hash) HSet(field string, value VarType) {
@@ -63,12 +62,14 @@ func (hash *Hash) HVals() {
 
 }
 
-func (hash *Hash) HScan() {
+func (hash *Hash) HScan(pattern string, count int) {
 
 }
 
-func NewHash(key string) *Hash {
-	h := Hash{key:key}
+// returns a new hash, owned by a given key
+// not sure if we need to save the key on here
+func NewHash() *Hash {
+	h := Hash{}
 	h.values = make(map[string]VarType)
 	h.size = 0
 

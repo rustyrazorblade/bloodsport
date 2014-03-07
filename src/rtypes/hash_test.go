@@ -14,7 +14,7 @@ type HashSuite struct {
 var _ = Suite(&HashSuite{})
 
 func (s *HashSuite) TestHashSetAndGet(c *C) {
-	h := NewHash("somekey")
+	h := NewHash()
 	h.HSet("k", NewInteger(1))
 	result := h.HGet("k")
 	num, _ := result.ToInt()
@@ -22,7 +22,7 @@ func (s *HashSuite) TestHashSetAndGet(c *C) {
 }
 
 func (s *HashSuite) TestIncrBy(c *C) {
-	h := NewHash("somekey")
+	h := NewHash()
 	h.HSet("k", NewInteger(1))
 	h.HIncrBy("k", 1)
 
@@ -32,7 +32,7 @@ func (s *HashSuite) TestIncrBy(c *C) {
 }
 
 func (s *HashSuite) TestIncrByNoVarSet(c *C) {
-	h := NewHash("somekey")
+	h := NewHash()
 	h.HIncrBy("j", 1)
 	result := h.HGet("j")
 	num, _ := result.ToInt()
@@ -41,7 +41,7 @@ func (s *HashSuite) TestIncrByNoVarSet(c *C) {
 
 
 func (s *HashSuite) TestExists(c *C) {
-	h := NewHash("test")
+	h := NewHash()
 	result := h.HExists("blah")
 	c.Check(result, Equals, false)
 
