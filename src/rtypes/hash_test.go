@@ -15,7 +15,7 @@ var _ = Suite(&HashSuite{})
 
 func (s *HashSuite) TestHashSetAndGet(c *C) {
 	h := NewHash("somekey")
-	h.HSet("k", NewInteger(1, 1))
+	h.HSet("k", NewInteger(1))
 	result := h.HGet("k")
 	num, _ := result.ToInt()
 	c.Check(num, Equals, int64(1))
@@ -23,7 +23,7 @@ func (s *HashSuite) TestHashSetAndGet(c *C) {
 
 func (s *HashSuite) TestIncrBy(c *C) {
 	h := NewHash("somekey")
-	h.HSet("k", NewInteger(1, 1))
+	h.HSet("k", NewInteger(1))
 	h.HIncrBy("k", 1)
 
 	result := h.HGet("k")
@@ -38,4 +38,16 @@ func (s *HashSuite) TestIncrByNoVarSet(c *C) {
 	num, _ := result.ToInt()
 	c.Check(num, Equals, int64(1))
 }
+
+
+func (s *HashSuite) TestExists(c *C) {
+	h := NewHash("test")
+	result := h.HExists("blah")
+	c.Check(result, Equals, false)
+
+	h.HSet("blah", NewString("bacon"))
+	result = h.HExists("blah")
+	c.Check(result, Equals, true)
+}
+
 

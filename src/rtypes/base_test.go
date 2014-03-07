@@ -13,7 +13,7 @@ type BaseSuite struct {}
 var _ = Suite(&BaseSuite{})
 
 func (s *BaseSuite) TestToInt(c *C) {
-	str := NewString("1", 1)
+	str := NewString("1")
 	result, _ := str.ToInt()
 	c.Check(result, Equals, int64(1))
 
@@ -22,15 +22,18 @@ func (s *BaseSuite) TestToInt(c *C) {
 
 func (s *BaseSuite) TestCreate(c *C) {
 
-	str := NewString("string", 1)
+	str := NewString("string")
 	c.Check(str.vtype, Equals, STR)
 
-	i := NewInteger(1, 1)
+	i := NewInteger(1)
 	result, _ := i.ToInt()
 	c.Check(result, Equals, int64(1))
 
-	f := NewFloat(1.0, 1)
+	f := NewFloat(1.0)
 	c.Check(f.ToFloat(), Equals, 1.0)
+}
+
+func (s *BaseSuite) TestDelete(c *C) {
 }
 
 
@@ -44,11 +47,11 @@ type IncrDecrSuite struct {
 var _ = Suite(&IncrDecrSuite{})
 
 func (s *IncrDecrSuite) SetUpTest(c *C) {
-	s.i = NewInteger(10, 1)
-	s.f = NewFloat(10, 1)
+	s.i = NewInteger(10)
+	s.f = NewFloat(10)
 
-	s.s = NewString("hello", 1)
-	s.s2 = NewString("10", 1)
+	s.s = NewString("hello")
+	s.s2 = NewString("10")
 }
 
 func (s *IncrDecrSuite) TestIncr(c *C) {

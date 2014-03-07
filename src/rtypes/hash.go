@@ -1,16 +1,20 @@
 package rtypes
 
+import (
+)
+
 type Hash struct {
 	key string
 	values map[string]VarType
 }
 
-func (hash *Hash) HDel(field ...string) {
-
+func (hash *Hash) HDel(field string) {
+	delete(hash.values, field)
 }
 
-func (hash *Hash) HExists(field string) {
-
+func (hash *Hash) HExists(field string) bool {
+	_, ok := hash.values[field]
+	return ok
 }
 
 func (hash *Hash) HGet(field string) VarType {
@@ -24,10 +28,9 @@ func (hash *Hash) HGetAll() {
 
 func (hash *Hash) HIncrBy(field string, increment int64) {
 	if _, ok := hash.values[field];  !ok {
-		hash.values[field] = NewInteger(0, 0)
+		hash.values[field] = NewInteger(0)
 	}
 	hash.values[field].IncrBy(increment)
-
 }
 
 func (hash *Hash) HIncrByFloat(field string, increment float64) {

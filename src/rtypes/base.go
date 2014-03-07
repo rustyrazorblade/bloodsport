@@ -110,13 +110,13 @@ type Tombstone struct {
 
 }
 
-func NewString(value string, timestamp int64) *StringType {
+func NewString(value string) *StringType {
 	bval := []byte(value)
 	str := StringType{BaseType{value:bval, vtype:STR}}
 	return &str
 }
 
-func NewFloat(value float64, timestamp int64) *FloatType {
+func NewFloat(value float64) *FloatType {
 	buf := new(bytes.Buffer)
 	binary.Write(buf, binary.LittleEndian, value)
 
@@ -125,7 +125,7 @@ func NewFloat(value float64, timestamp int64) *FloatType {
 
 }
 
-func NewInteger(value int64, timestamp int64) *IntType {
+func NewInteger(value int64) *IntType {
 	buf := new(bytes.Buffer)
 	binary.Write(buf, binary.LittleEndian, value)
 	i := IntType{BaseType{value:buf.Bytes(), vtype:INT}}
