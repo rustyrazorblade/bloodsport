@@ -45,9 +45,12 @@ func (s *HashSuite) TestExists(c *C) {
 	result := h.HExists("blah")
 	c.Check(result, Equals, false)
 
+	c.Check(h.size, Equals, 0)
+
 	h.HSet("blah", NewString("bacon"))
 	result = h.HExists("blah")
 	c.Check(result, Equals, true)
+	c.Check(h.size, Equals, 1)
 }
 
 
