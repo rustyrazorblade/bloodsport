@@ -17,14 +17,14 @@ type VarType interface {
 }
 
 const (
-	INT = iota
-	FLOAT = iota
-	STR = iota
+	INT int8 = iota
+	FLOAT
+	STR
 )
 // base k/v structure
 type BaseType struct {
 	value []byte
-	vtype int
+	vtype int8
 
 }
 
@@ -91,6 +91,23 @@ func (b *BaseType) DecrBy(decrement, timestamp int64) (int64, error) {
 	return val, nil
 	return 0, nil
 
+}
+
+func (b *BaseType) MarshalBinary() (data []byte, err error) {
+	buf := new(bytes.Buffer)
+	binary.Write(buf, binary.LittleEndian, b.vtype)
+	binary.Write(buf, binary.LittleEndian, b.value)
+	return buf.Bytes(), nil
+}
+
+func (b *BaseType) UnmarshalBinary(data []byte) error {
+	// unpack the first 2 bytes
+	buf := bytes.NewBuffer(data[0:1])
+	binary.Read(buf, binary.LittleEndian, &b.vtype)
+
+	// put the rest in the value
+	b.value = data[1:len(data)]
+	return nil
 }
 
 type StringType struct {

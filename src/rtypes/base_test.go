@@ -33,7 +33,27 @@ func (s *BaseSuite) TestCreate(c *C) {
 	c.Check(f.ToFloat(), Equals, 1.0)
 }
 
-func (s *BaseSuite) TestDelete(c *C) {
+
+func (s *BaseSuite) TestMarshaling(c *C) {
+	tests := []string{"hello", "test", "string", "bacon", "eggs", "whatever this is a long ass string"}
+	for _, test := range tests {
+		tmp := NewString(test)
+		serialized_data, err := tmp.MarshalBinary()
+
+		c.Check(err, Equals, nil)
+
+		tmp2 := BaseType{}
+		tmp2.UnmarshalBinary(serialized_data)
+
+		c.Check(err, Equals, nil)
+		c.Check(tmp2.vtype, Equals, tmp.vtype)
+
+		for i := range tmp.value {
+			c.Check(tmp2.value[i], Equals, tmp.value[i])
+		}
+
+	}
+
 }
 
 
@@ -90,5 +110,8 @@ func (s *IncrDecrSuite) TestDecr(c *C) {
 	c.Check(e, Equals, nil)
 	c.Check(i, Equals, int64(9))
 }
+
+
+
 
 
