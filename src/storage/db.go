@@ -10,7 +10,12 @@ high level database storage.  wraps the commit log and multiple files
  */
 
 type DB struct {
+	commit_log *CommitLog
+}
 
+func NewDB(commit_log *CommitLog) *DB {
+	db := DB{commit_log:commit_log}
+	return &db
 }
 
 func (db *DB) Append(key string, value rtypes.VarType) {
