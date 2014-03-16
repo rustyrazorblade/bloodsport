@@ -13,8 +13,8 @@ type BaseType struct {
 	value string
 }
 
-func (b *BaseType) ToInt() (int, error) {
-	result, err := strconv.Atoi(b.value)
+func (b *BaseType) ToInt() (int64, error) {
+	result, err := strconv.ParseInt(b.value, 10, 64)
 	return result, err
 }
 
@@ -26,23 +26,24 @@ func (b *BaseType) ToFloat() (float64, error) {
 	return strconv.ParseFloat(b.value, 64)
 }
 
-func (b *BaseType) IncrBy(increment int) (string, error) {
+func (b *BaseType) IncrBy(increment int64) (string, error) {
 	tmp, err := b.ToInt()
 
 	if err != nil {
 		return "", err
 	}
-	b.value = strconv.Itoa(tmp + increment)
+
+	b.value = strconv.FormatInt(tmp + increment, 10)
 
 	return b.value, nil
 }
 
-func (b *BaseType) DecrBy(decrement int) (string, error) {
+func (b *BaseType) DecrBy(decrement int64) (string, error) {
 	tmp, err := b.ToInt()
 	if err != nil {
 		return "", err
 	}
-	b.value = strconv.Itoa(tmp - decrement)
+	b.value = strconv.FormatInt(tmp - decrement, 10)
 	return b.value, nil
 
 }

@@ -27,7 +27,7 @@ func (hash *Hash) HGet(field string) string {
 
 
 // increments value in a hash.  attempts to coerce the value to an int
-func (hash *Hash) HIncrBy(field string, increment int) (string, error) {
+func (hash *Hash) HIncrBy(field string, increment int64) (string, error) {
 	if _, ok := hash.values[field]; !ok {
 		tmp := basetype.NewString("0")
 		hash.values[field] = &tmp
