@@ -13,7 +13,7 @@ import (
 )
 
 type String struct {
-	value basetype.VarType
+	value *basetype.BaseType
 
 }
 
