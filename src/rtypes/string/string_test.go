@@ -5,10 +5,15 @@ import (
 	. "launchpad.net/gocheck"
 )
 
-func StringTest(t *testing.T) { TestingT(t) }
+func Test(t *testing.T) { TestingT(t) }
 
-type StringTestSuite struct {
+type StringSuite struct {
 
 }
 
-var _ = Suite(&StringTestSuite{})
+var _ = Suite(&StringSuite{})
+
+func (s *StringSuite) TestSet(c *C) {
+
+}
+

@@ -1,10 +1,19 @@
 package string
 
+import (
+	"rtypes/basetype"
+)
+
 type String struct {
-	value VarType
+	value basetype.VarType
 
 }
 
+func NewString(s basetype.VarType) *String {
+	new_string := String{value:s}
+	return &new_string
+}
+
 func (s *String) Set(str string) {
-	s.value = NewString(str)
+	s.value = basetype.NewString(str)
 }
