@@ -3,7 +3,6 @@ package basetype
 import (
 	"testing"
 	. "launchpad.net/gocheck"
-	"fmt"
 )
 
 func Test(t *testing.T) { TestingT(t) }
@@ -29,7 +28,6 @@ func (s *BaseSuite) TestMarshaling(c *C) {
 	for _, test := range tests {
 		tmp := NewString(test)
 		serialized_data := tmp.MarshalBinary()
-		fmt.Println(serialized_data)
 
 		tmp2 := BaseType{}
 		tmp2.UnmarshalBinary(serialized_data)
@@ -39,9 +37,9 @@ func (s *BaseSuite) TestMarshaling(c *C) {
 }
 
 type IncrDecrSuite struct {
-	s *BaseType
-	s2 *BaseType
-	s3 *BaseType
+	s BaseType
+	s2 BaseType
+	s3 BaseType
 }
 
 var _ = Suite(&IncrDecrSuite{})

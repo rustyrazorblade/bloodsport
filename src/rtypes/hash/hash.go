@@ -5,7 +5,7 @@ import (
 )
 
 type Hash struct {
-	values map[string]basetype.VarType
+	values map[string]*basetype.BaseType
 	size int
 }
 
@@ -20,19 +20,19 @@ func (hash *Hash) HExists(field string) bool {
 }
 
 // returns the value, if it's available.  else returns... nothing?
-func (hash *Hash) HGet(field string) basetype.VarType {
+func (hash *Hash) HGet(field string) string {
 	tmp := hash.values[field]
-	return tmp
+	return tmp.ToString()
 }
 
 
 // increments value in a hash.  attempts to coerce the value to an int
-func (hash *Hash) HIncrBy(field string, increment int64) {
-	if _, ok := hash.values[field];  !ok {
-		hash.values[field] = basetype.NewInteger(0)
-		hash.size += 1
+func (hash *Hash) HIncrBy(field string, increment int) (string, error) {
+	if _, ok := hash.values[field]; !ok {
+		tmp := basetype.NewString("0")
+		hash.values[field] = &tmp
 	}
-	hash.values[field].IncrBy(increment)
+	return hash.values[field].IncrBy(increment)
 }
 
 
@@ -48,11 +48,12 @@ func (hash *Hash) HLen() int {
 	return hash.size
 }
 
-func (hash *Hash) HSet(field string, value basetype.VarType) {
+func (hash *Hash) HSet(field string, value string) {
 	if _, ok := hash.values[field]; !ok {
 		hash.size += 1
 	}
-	hash.values[field] = value
+	tmp := basetype.NewString(value)
+	hash.values[field] = &tmp
 }
 
 func (hash *Hash) HSetNX(field string, value string) {
@@ -71,7 +72,7 @@ func (hash *Hash) HScan(pattern string, count int) {
 // not sure if we need to save the key on here
 func NewHash() *Hash {
 	h := Hash{}
-	h.values = make(map[string]basetype.VarType)
+	h.values = make(map[string]*basetype.BaseType)
 	h.size = 0
 
 	return &h

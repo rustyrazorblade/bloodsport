@@ -3,10 +3,9 @@ package hash
 import (
 	"testing"
 	. "launchpad.net/gocheck"
-	"rtypes/basetype"
 )
 
-func HashTest(t *testing.T) { TestingT(t) }
+func Test(t *testing.T) { TestingT(t) }
 
 type HashSuite struct {
 
@@ -16,28 +15,25 @@ var _ = Suite(&HashSuite{})
 
 func (s *HashSuite) TestHashSetAndGet(c *C) {
 	h := NewHash()
-	h.HSet("k", basetype.NewInteger(1))
+	h.HSet("k", "1")
 	result := h.HGet("k")
-	num, _ := result.ToInt()
-	c.Check(num, Equals, int64(1))
+	c.Check(result, Equals, "1")
 }
 
 func (s *HashSuite) TestIncrBy(c *C) {
 	h := NewHash()
-	h.HSet("k", basetype.NewInteger(1))
+	h.HSet("k", "1")
 	h.HIncrBy("k", 1)
 
 	result := h.HGet("k")
-	num, _ := result.ToInt()
-	c.Check(num, Equals, int64(2))
+	c.Check(result, Equals, "2")
 }
 
 func (s *HashSuite) TestIncrByNoVarSet(c *C) {
 	h := NewHash()
 	h.HIncrBy("j", 1)
 	result := h.HGet("j")
-	num, _ := result.ToInt()
-	c.Check(num, Equals, int64(1))
+	c.Check(result, Equals, "1")
 }
 
 
@@ -48,7 +44,7 @@ func (s *HashSuite) TestExists(c *C) {
 
 	c.Check(h.size, Equals, 0)
 
-	h.HSet("blah", basetype.NewString("bacon"))
+	h.HSet("blah", "bacon")
 	result = h.HExists("blah")
 	c.Check(result, Equals, true)
 	c.Check(h.size, Equals, 1)

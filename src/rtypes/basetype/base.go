@@ -8,24 +8,12 @@ type RedisType interface {
 	Serialize(bytes []byte) *[]byte
 }
 
-type VarType interface {
-	ToInt() (int64, error)
-	IncrBy(int64) (int64, error)
-	ToString() (string)
-}
-
-const (
-	INT int8 = iota
-	FLOAT
-	STR
-)
 // base k/v structure
 type BaseType struct {
 	value string
 }
 
 func (b *BaseType) ToInt() (int, error) {
-
 	result, err := strconv.Atoi(b.value)
 	return result, err
 }
@@ -68,8 +56,8 @@ func (b *BaseType) UnmarshalBinary(data []byte) error {
 	return nil
 }
 
-func NewString(value string) *BaseType {
+func NewString(value string) BaseType {
 	str := BaseType{value:value}
-	return &str
+	return str
 }
 
