@@ -14,6 +14,7 @@ type RedisType interface {
 type VarType interface {
 	ToInt() (int64, error)
 	IncrBy(int64) (int64, error)
+	ToString() (string)
 }
 
 const (
@@ -44,6 +45,11 @@ func (b *BaseType) ToInt() (int64, error) {
 	binary.Read(buf, binary.LittleEndian, &result)
 	return result, nil
 }
+
+func (b *BaseType) ToString() string {
+	return string(b.value)
+}
+
 func (b *BaseType) ToFloat() float64 {
 	var result float64
 	buf := bytes.NewReader(b.value)

@@ -13,7 +13,10 @@ type StringSuite struct {
 
 var _ = Suite(&StringSuite{})
 
-func (s *StringSuite) TestSet(c *C) {
-
+func (suite *StringSuite) TestSet(c *C) {
+	s := NewString()
+	s.Set("test")
+	result := s.Get()
+	c.Check(result, Equals, "test")
 }
 
