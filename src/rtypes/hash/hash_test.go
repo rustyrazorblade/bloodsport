@@ -1,8 +1,9 @@
-package rtypes
+package hash
 
 import (
 	"testing"
 	. "launchpad.net/gocheck"
+	"rtypes/basetype"
 )
 
 func HashTest(t *testing.T) { TestingT(t) }
@@ -15,7 +16,7 @@ var _ = Suite(&HashSuite{})
 
 func (s *HashSuite) TestHashSetAndGet(c *C) {
 	h := NewHash()
-	h.HSet("k", NewInteger(1))
+	h.HSet("k", basetype.NewInteger(1))
 	result := h.HGet("k")
 	num, _ := result.ToInt()
 	c.Check(num, Equals, int64(1))
@@ -23,7 +24,7 @@ func (s *HashSuite) TestHashSetAndGet(c *C) {
 
 func (s *HashSuite) TestIncrBy(c *C) {
 	h := NewHash()
-	h.HSet("k", NewInteger(1))
+	h.HSet("k", basetype.NewInteger(1))
 	h.HIncrBy("k", 1)
 
 	result := h.HGet("k")
@@ -47,7 +48,7 @@ func (s *HashSuite) TestExists(c *C) {
 
 	c.Check(h.size, Equals, 0)
 
-	h.HSet("blah", NewString("bacon"))
+	h.HSet("blah", basetype.NewString("bacon"))
 	result = h.HExists("blah")
 	c.Check(result, Equals, true)
 	c.Check(h.size, Equals, 1)

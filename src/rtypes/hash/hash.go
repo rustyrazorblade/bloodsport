@@ -1,10 +1,11 @@
-package rtypes
+package hash
 
 import (
+	"rtypes/basetype"
 )
 
 type Hash struct {
-	values map[string]VarType
+	values map[string]basetype.VarType
 	size int
 }
 
@@ -19,7 +20,7 @@ func (hash *Hash) HExists(field string) bool {
 }
 
 // returns the value, if it's available.  else returns... nothing?
-func (hash *Hash) HGet(field string) VarType {
+func (hash *Hash) HGet(field string) basetype.VarType {
 	tmp := hash.values[field]
 	return tmp
 }
@@ -28,7 +29,7 @@ func (hash *Hash) HGet(field string) VarType {
 // increments value in a hash.  attempts to coerce the value to an int
 func (hash *Hash) HIncrBy(field string, increment int64) {
 	if _, ok := hash.values[field];  !ok {
-		hash.values[field] = NewInteger(0)
+		hash.values[field] = basetype.NewInteger(0)
 		hash.size += 1
 	}
 	hash.values[field].IncrBy(increment)
@@ -47,7 +48,7 @@ func (hash *Hash) HLen() int {
 	return hash.size
 }
 
-func (hash *Hash) HSet(field string, value VarType) {
+func (hash *Hash) HSet(field string, value basetype.VarType) {
 	if _, ok := hash.values[field]; !ok {
 		hash.size += 1
 	}
@@ -70,7 +71,7 @@ func (hash *Hash) HScan(pattern string, count int) {
 // not sure if we need to save the key on here
 func NewHash() *Hash {
 	h := Hash{}
-	h.values = make(map[string]VarType)
+	h.values = make(map[string]basetype.VarType)
 	h.size = 0
 
 	return &h

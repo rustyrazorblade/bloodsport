@@ -1,4 +1,4 @@
-package rtypes
+package basetype
 
 import (
 	"bytes"

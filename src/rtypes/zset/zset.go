@@ -1,4 +1,4 @@
-package rtypes
+package zset
 
 /*
 zset needs to be composed of 2 structures
