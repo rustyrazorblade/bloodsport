@@ -1,2 +1,2 @@
-package storage
+package commitlog
 
