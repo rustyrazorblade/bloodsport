@@ -15,7 +15,7 @@ var _ = Suite(&BaseSuite{})
 func (s *BaseSuite) TestToInt(c *C) {
 	str := NewString("1")
 	result, _ := str.ToInt()
-	c.Check(result, Equals, 1)
+	c.Check(result, Equals, int64(1))
 }
 
 func (s *BaseSuite) TestCreate(c *C) {

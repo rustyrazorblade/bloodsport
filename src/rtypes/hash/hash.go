@@ -37,6 +37,10 @@ func (hash *Hash) HIncrBy(field string, increment int64) (string, error) {
 
 
 func (hash *Hash) HIncrByFloat(field string, increment float64) {
+	if _, ok := hash.values[field]; !ok {
+		tmp := basetype.NewString("0")
+		hash.values[field] = &tmp
+	}
 
 }
 

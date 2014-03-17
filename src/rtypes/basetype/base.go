@@ -5,7 +5,8 @@ import (
 )
 
 type RedisType interface {
-	Serialize(bytes []byte) *[]byte
+	MarshalBinary() (data []byte, err error)
+	UnmarshalBinary(data []byte) error
 }
 
 // base k/v structure
