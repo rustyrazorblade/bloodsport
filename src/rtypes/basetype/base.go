@@ -49,8 +49,8 @@ func (b *BaseType) DecrBy(decrement int64) (string, error) {
 
 }
 
-func (b *BaseType) MarshalBinary() (data []byte) {
-	return []byte(b.value)
+func (b *BaseType) MarshalBinary() ([]byte, error) {
+	return []byte(b.value), nil
 }
 
 func (b *BaseType) UnmarshalBinary(data []byte) error {

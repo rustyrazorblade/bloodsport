@@ -14,7 +14,7 @@ type StringSuite struct {
 var _ = Suite(&StringSuite{})
 
 func (suite *StringSuite) TestSet(c *C) {
-	s := NewString()
+	s := NewString("banana")
 	s.Set("test")
 	result := s.Get()
 	c.Check(result, Equals, "test")

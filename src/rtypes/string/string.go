@@ -17,8 +17,9 @@ type String struct {
 
 }
 
-func NewString() *String {
-	new_string := String{}
+func NewString(value string) *String {
+	val := basetype.NewString(value)
+	new_string := String{value:val}
 	return &new_string
 }
 
@@ -30,10 +31,10 @@ func (s *String) Get() string {
 	return s.value.ToString()
 }
 
-func (s String) MarshalBinary() ([]byte, error) {
+func (s *String) MarshalBinary() ([]byte, error) {
 	return nil, nil
 }
 
-func (s String) UnmarshalBinary(data []byte) error {
+func (s *String) UnmarshalBinary(data []byte) error {
 	return nil
 }
