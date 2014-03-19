@@ -29,3 +29,11 @@ func (s *String) Set(str string) {
 func (s *String) Get() string {
 	return s.value.ToString()
 }
+
+func (s String) MarshalBinary() ([]byte, error) {
+	return nil, nil
+}
+
+func (s String) UnmarshalBinary(data []byte) error {
+	return nil
+}
