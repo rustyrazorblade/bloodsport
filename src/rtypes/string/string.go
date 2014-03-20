@@ -13,12 +13,13 @@ import (
 )
 
 type String struct {
+	basetype.RedisDataStructureBase
 	value basetype.BaseType
 
 }
 
 // make sure we conform to the RedisType interface
-var _ basetype.RedisType = &String{}
+var _ basetype.RedisDataStructureInterface = &String{}
 
 func NewString(value string) *String {
 	val := basetype.NewString(value)

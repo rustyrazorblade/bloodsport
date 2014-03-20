@@ -23,6 +23,10 @@ func (s *BaseSuite) TestCreate(c *C) {
 	c.Check(str.value, Equals, "string")
 }
 
+func (s *BaseSuite) TestExpire(c *C) {
+
+}
+
 func (s *BaseSuite) TestMarshaling(c *C) {
 	tests := []string{"hello", "test", "string", "bacon", "eggs", "whatever this is a long ass string"}
 	for _, test := range tests {

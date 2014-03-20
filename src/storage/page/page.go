@@ -10,18 +10,17 @@ types, and manages the memory of the page.
 import (
 	"rtypes/basetype"
 	rstring "rtypes/string"
-	"errors"
 )
 
 
 type Page struct {
 	dirty bool
-	keys map[string]basetype.RedisType
+	keys map[string]basetype.RedisDataStructureInterface
 }
 
 func NewPage() *Page {
 	page := Page{dirty:false}
-	page.keys = make(map[string]basetype.RedisType)
+	page.keys = make(map[string]basetype.RedisDataStructureInterface)
 	return &page
 }
 
@@ -36,11 +35,13 @@ func (p *Page) NewString(key string, value string) *rstring.String {
 	return tmp
 }
 
-func (p *Page) Get(key string) (basetype.RedisType, error) {
+func (p *Page) Get(key string) (basetype.RedisDataStructureInterface, error) {
 	// returns an interface.  it's up to the higher layer to decide what to do with it for now
 	if tmp, ok := p.keys[key]; ok {
 		return tmp, nil
+	} else if tmp.Expired() {
+		return nil, nil
 	}
-	return nil, errors.New("not found")
+	return nil, nil
 
 }

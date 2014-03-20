@@ -19,13 +19,10 @@ func (bs *BaseSuite) TestNewPage(c *C) {
 	c.Check(p.dirty, Equals, false)
 }
 
-func (bs *BaseSuite) TestMarshal(c *C) {
+func (bs *BaseSuite) TestMarshaling(c *C) {
 
 }
 
-func (bs *BaseSuite) TestUnmarshal(c *C) {
-
-}
 
 func (bs *BaseSuite) TestExists(c *C) {
 	p := NewPage()
@@ -40,7 +37,8 @@ func (bs *BaseSuite) TestExists(c *C) {
 
 	if b_as_string, ok := b.(*rstring.String); ok {
 		// makes sure we get a string type back
-		c.Check(b_as_string.Get(), Equals, "eggs")
+		value := b_as_string.Get()
+		c.Check(value, Equals, "eggs")
 
 	} else {
 		c.Fail()

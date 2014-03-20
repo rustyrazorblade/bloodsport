@@ -2,14 +2,29 @@ package basetype
 
 import (
 	"strconv"
+	"time"
 )
 
-type RedisType interface {
+// Interface for redis containers like Hash, String, Set, Sorted Set
+type RedisDataStructureInterface interface {
 	MarshalBinary() (data []byte, err error)
 	UnmarshalBinary(data []byte) error
+	Expired() bool
+}
+type RedisDataStructureBase struct {
+	expire_time *time.Time
 }
 
-// base k/v structure
+func (r *RedisDataStructureBase) Expired() bool {
+	return false
+}
+
+func (b *RedisDataStructureBase) SetExpire(t *time.Time) {
+	b.expire_time = t
+}
+
+
+// Base k/v structure used in all containers
 type BaseType struct {
 	value string
 }
@@ -48,6 +63,7 @@ func (b *BaseType) DecrBy(decrement int64) (string, error) {
 	return b.value, nil
 
 }
+
 
 func (b *BaseType) MarshalBinary() ([]byte, error) {
 	return []byte(b.value), nil
