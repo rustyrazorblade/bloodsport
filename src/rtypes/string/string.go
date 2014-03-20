@@ -17,6 +17,9 @@ type String struct {
 
 }
 
+// make sure we conform to the RedisType interface
+var _ basetype.RedisType = &String{}
+
 func NewString(value string) *String {
 	val := basetype.NewString(value)
 	new_string := String{value:val}
