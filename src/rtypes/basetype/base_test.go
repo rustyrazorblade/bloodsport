@@ -31,7 +31,7 @@ func (s *BaseSuite) TestMarshaling(c *C) {
 	tests := []string{"hello", "test", "string", "bacon", "eggs", "whatever this is a long ass string"}
 	for _, test := range tests {
 		tmp := NewString(test)
-		serialized_data := tmp.MarshalBinary()
+		serialized_data, _ := tmp.MarshalBinary()
 
 		tmp2 := BaseType{}
 		tmp2.UnmarshalBinary(serialized_data)
