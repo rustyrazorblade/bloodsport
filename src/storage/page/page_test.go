@@ -6,6 +6,7 @@ import (
 	. "launchpad.net/gocheck"
 	rstring "rtypes/string"
 	"time"
+	"fmt"
 )
 
 func Test(t *testing.T) { TestingT(t) }
@@ -66,4 +67,12 @@ func (bs *BaseSuite) TestExpireInPast(c *C) {
 	s.SetExpire(&the_past)
 	s2, _ := p.Get("chong_li")
 	c.Check(s2, Equals, nil)
+}
+
+func (bs *BaseSuite) TestExecute(c *C) {
+	command := func () {
+		fmt.Println("OK")
+	}
+	p := NewPage()
+	p.Execute((Command)(command))
 }

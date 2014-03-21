@@ -29,6 +29,9 @@ func (b *RedisDataStructureBase) SetExpire(t *time.Time) {
 	b.expire_time = t
 }
 
+func (b *RedisDataStructureBase) Persist() {
+	b.expire_time = nil
+}
 
 // Base k/v structure used in all containers
 type BaseType struct {

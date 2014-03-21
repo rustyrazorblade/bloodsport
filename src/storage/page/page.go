@@ -24,6 +24,8 @@ func NewPage() *Page {
 	return &page
 }
 
+type Command func()
+
 func (p *Page) Exists(key string) bool {
 	_, present := p.keys[key]
 	return present
@@ -52,3 +54,13 @@ func (p *Page) Get(key string) (basetype.RedisDataStructureInterface, error) {
 	return nil, nil
 
 }
+
+
+func (p *Page) Execute(c Command) {
+	c()
+}
+
+func (p *Page) Start() {
+	// starts and actor
+}
+
