@@ -10,6 +10,7 @@ package string
 
 import (
 	"rtypes/basetype"
+	"strings"
 )
 
 type String struct {
@@ -41,4 +42,10 @@ func (s *String) MarshalBinary() ([]byte, error) {
 
 func (s *String) UnmarshalBinary(data []byte) error {
 	return nil
+}
+
+func (s *String) Append(s2 string) (int, error) {
+	tmp := strings.Join([]string{s.Get(), s2}, "")
+	s.Set(tmp)
+	return len(tmp), nil
 }

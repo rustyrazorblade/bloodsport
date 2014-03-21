@@ -28,3 +28,13 @@ func (suite *StringSuite) TestExpire(c *C) {
 	s := NewString("van_damme")
 	s.SetExpire(&the_future)
 }
+
+func (suite *StringSuite) TestAppend(c *C) {
+	s := NewString("ray_jackson")
+	new_length, _  := s.Append("_amazing_beard")
+	c.Check(new_length, Equals, 25)
+	c.Check(s.Get(), Equals, "ray_jackson_amazing_beard")
+
+
+
+}
