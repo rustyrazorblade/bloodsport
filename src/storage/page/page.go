@@ -38,8 +38,11 @@ func (p *Page) NewString(key string, value string) *rstring.String {
 func (p *Page) Get(key string) (basetype.RedisDataStructureInterface, error) {
 	// returns an interface.  it's up to the higher layer to decide what to do with it for now
 	if tmp, ok := p.keys[key]; ok {
+		if tmp.Expired() {
+			return nil, nil
+		}
 		return tmp, nil
-	} else if tmp.Expired() {
+	} else  {
 		return nil, nil
 	}
 	return nil, nil

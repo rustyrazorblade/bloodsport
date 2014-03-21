@@ -5,18 +5,24 @@ import (
 	"time"
 )
 
+
+
 // Interface for redis containers like Hash, String, Set, Sorted Set
 type RedisDataStructureInterface interface {
 	MarshalBinary() (data []byte, err error)
 	UnmarshalBinary(data []byte) error
 	Expired() bool
+	SetExpire(*time.Time)
 }
 type RedisDataStructureBase struct {
 	expire_time *time.Time
 }
 
 func (r *RedisDataStructureBase) Expired() bool {
-	return false
+	if r.expire_time == nil {
+		return false
+	}
+	return time.Now().After(*r.expire_time)
 }
 
 func (b *RedisDataStructureBase) SetExpire(t *time.Time) {

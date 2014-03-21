@@ -5,6 +5,7 @@ import (
 	"testing"
 	. "launchpad.net/gocheck"
 	rstring "rtypes/string"
+	"time"
 )
 
 func Test(t *testing.T) { TestingT(t) }
@@ -44,4 +45,25 @@ func (bs *BaseSuite) TestExists(c *C) {
 		c.Fail()
 	}
 
+}
+
+
+func (bs *BaseSuite) TestExpireInFuture(c *C) {
+	the_future := time.Now().Add(time.Duration(10) * time.Second)
+
+	p := NewPage()
+	s := p.NewString("frank_dux", "wins")
+	s.SetExpire(&the_future)
+	s2, _ := p.Get("frank_dux")
+	c.Check(s2, Not(Equals), nil)
+}
+
+func (bs *BaseSuite) TestExpireInPast(c *C) {
+	// test the expired key case
+	p := NewPage()
+	the_past := time.Now().Add(-time.Duration(10) * time.Second)
+	s := p.NewString("chong_li", "loses")
+	s.SetExpire(&the_past)
+	s2, _ := p.Get("chong_li")
+	c.Check(s2, Equals, nil)
 }
