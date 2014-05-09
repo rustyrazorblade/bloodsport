@@ -36,13 +36,6 @@ func (s *String) Get() string {
 	return s.value.ToString()
 }
 
-func (s *String) MarshalBinary() ([]byte, error) {
-	return nil, nil
-}
-
-func (s *String) UnmarshalBinary(data []byte) error {
-	return nil
-}
 
 func (s *String) Append(s2 string) (int, error) {
 	tmp := strings.Join([]string{s.Get(), s2}, "")
