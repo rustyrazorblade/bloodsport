@@ -11,7 +11,9 @@ package string
 import (
 	"rtypes/basetype"
 	"strings"
+	"encoding/gob"
 )
+
 
 type String struct {
 	basetype.RedisDataStructureBase
@@ -42,3 +44,7 @@ func (s *String) Append(s2 string) (int, error) {
 	s.Set(tmp)
 	return len(tmp), nil
 }
+
+//func (s *String) Encode(encoder gob.Encoder) {
+//	s.RedisDataStructureBase.Encode(encoder)
+//}

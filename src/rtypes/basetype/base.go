@@ -3,7 +3,6 @@ package basetype
 import (
 	"strconv"
 	"time"
-	"bytes"
 	"encoding/gob"
 )
 
@@ -13,7 +12,10 @@ import (
 type RedisDataStructureInterface interface {
 	IsExpired() bool
 	SetExpire(*time.Time)
+	Encode(gob.Encoder)
+	//Decode(*bytes.Buffer)
 }
+
 type RedisDataStructureBase struct {
 	expire_time *time.Time
 }
@@ -81,9 +83,7 @@ func NewString(value string) BaseType {
 }
 
 
-// writes data into a supplied buffer, for either sending over network or writing to disk
-func (b *BaseType) Encode(buffer bytes.Buffer, encoder gob.Encoder) {
-	// keylength (2 bytes) key datalength data
-	// in cluster mode we'll end up with md5 for all keys but this should work in standalone as well
-	//encoder.Encode()
+func (b *RedisDataStructureBase) Encode(encoder gob.Encoder) {
+	// sets up the first part of the buffer containing common data
+	encoder.Encode(b)
 }

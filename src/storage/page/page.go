@@ -42,7 +42,7 @@ func (p *Page) Get(key string) (basetype.RedisDataStructureInterface, error) {
 	// if the key is marked with an expiration that's before right now, we expire the key,
 	// delete it, and return nil
 	if tmp, ok := p.keys[key]; ok {
-		if tmp.Expired() {
+		if tmp.IsExpired() {
 			// todo check for memory leaks
 			delete(p.keys, key)
 			return nil, nil
